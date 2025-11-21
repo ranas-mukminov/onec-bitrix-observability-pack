@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    volumes:
+      - ./examples/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:10.0.0
+    volumes:
+      - ./examples/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+
+  onec_exporter:
+    build: ./exporters/onec
+    ports:
+      - "8000:8000"
+    environment:
+      - ONEC_CLUSTER_HOST=192.168.1.10
+      - ONEC_CLUSTER_PORT=1540
+      - ONEC_ADMIN_USER=admin
+      - ONEC_ADMIN_PASSWORD=secret
+    networks:
+      - monitoring
+
+  bitrix_exporter:
+    build: ./exporters/bitrix
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./exporters/bitrix/src:/app/src
+    networks:
+      - monitoring
+
+  # Example DB Exporter (Postgres)
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter
+    environment:
+      - DATA_SOURCE_NAME=postgresql://postgres:password@postgres:5432/postgres?sslmode=disable
+    ports:
+      - "9187:9187"
+    networks:
+      - monitoring
+
+  # AI Assistant (Optional)
+  ai_assistant:
+    build: ./ai
+    environment:
+      - PROMETHEUS_URL=http://prometheus:9090
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge

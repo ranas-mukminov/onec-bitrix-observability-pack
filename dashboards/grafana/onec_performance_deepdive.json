@@ -1,0 +1,36 @@
+{
+    "title": "1C Performance Deep Dive",
+    "uid": "onec-deepdive",
+    "panels": [
+        {
+            "title": "Long Queries Total",
+            "type": "timeseries",
+            "targets": [
+                {
+                    "expr": "rate(onec_long_queries_total[5m])"
+                }
+            ],
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "title": "Locks Count",
+            "type": "timeseries",
+            "targets": [
+                {
+                    "expr": "onec_locks_count"
+                }
+            ],
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 8
+            }
+        }
+    ]
+}

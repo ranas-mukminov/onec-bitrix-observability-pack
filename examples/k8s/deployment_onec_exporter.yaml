@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onec-exporter
+  labels:
+    app: onec-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: onec-exporter
+  template:
+    metadata:
+      labels:
+        app: onec-exporter
+    spec:
+      containers:
+      - name: onec-exporter
+        image: onec-exporter:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: ONEC_CLUSTER_HOST
+          value: "onec-cluster.local"
+        - name: ONEC_CLUSTER_PORT
+          value: "1540"

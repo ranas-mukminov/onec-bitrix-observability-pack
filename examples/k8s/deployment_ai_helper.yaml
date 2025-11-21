@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-helper
+  labels:
+    app: ai-helper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-helper
+  template:
+    metadata:
+      labels:
+        app: ai-helper
+    spec:
+      containers:
+      - name: ai-helper
+        image: ai-helper:latest
+        env:
+        - name: PROMETHEUS_URL
+          value: "http://prometheus:9090"

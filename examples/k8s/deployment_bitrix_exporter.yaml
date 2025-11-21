@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitrix-exporter
+  labels:
+    app: bitrix-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bitrix-exporter
+  template:
+    metadata:
+      labels:
+        app: bitrix-exporter
+    spec:
+      containers:
+      - name: bitrix-exporter
+        image: bitrix-exporter:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: bitrix-logs
+          mountPath: /var/log/nginx
+      volumes:
+      - name: bitrix-logs
+        hostPath:
+          path: /var/log/nginx

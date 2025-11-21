@@ -1,0 +1,66 @@
+{
+    "title": "1C + Bitrix Admin / DBA",
+    "uid": "onec-bitrix-admin",
+    "panels": [
+        {
+            "title": "Active Sessions (1C)",
+            "type": "timeseries",
+            "targets": [
+                {
+                    "expr": "onec_sessions_active"
+                }
+            ],
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "title": "Blocked Sessions (1C)",
+            "type": "timeseries",
+            "targets": [
+                {
+                    "expr": "onec_sessions_blocked"
+                }
+            ],
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 0
+            }
+        },
+        {
+            "title": "PHP-FPM Active Processes",
+            "type": "timeseries",
+            "targets": [
+                {
+                    "expr": "php_fpm_active_processes"
+                }
+            ],
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 8
+            }
+        },
+        {
+            "title": "Bitrix Agents Queue",
+            "type": "stat",
+            "targets": [
+                {
+                    "expr": "bitrix_agents_queue_size"
+                }
+            ],
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 8
+            }
+        }
+    ]
+}

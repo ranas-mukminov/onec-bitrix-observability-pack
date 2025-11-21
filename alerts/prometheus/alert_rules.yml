@@ -1,0 +1,40 @@
+groups:
+  - name: onec_alerts
+    rules:
+      - alert: OneCClusterDown
+        expr: onec_cluster_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "1C Cluster is down"
+          description: "Cluster {{ $labels.cluster }} is unreachable."
+
+      - alert: OneCBlockingSessionsHigh
+        expr: sum(onec_sessions_blocked) by (cluster) > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High number of blocked sessions in 1C"
+          description: "Cluster {{ $labels.cluster }} has {{ $value }} blocked sessions."
+
+  - name: bitrix_alerts
+    rules:
+      - alert: BitrixHighErrorRate
+        expr: rate(bitrix_http_5xx_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High HTTP 5xx error rate"
+          description: "Host {{ $labels.host }} has high error rate."
+
+      - alert: PHPFPMHighLoad
+        expr: php_fpm_active_processes > 50
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "PHP-FPM busy"
+          description: "Active processes > 50."
