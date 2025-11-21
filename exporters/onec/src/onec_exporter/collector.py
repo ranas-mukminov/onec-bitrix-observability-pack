@@ -1,8 +1,5 @@
 import logging
 import time
-from typing import Optional
-
-from prometheus_client import start_http_server
 
 from onec_exporter.metrics import (
     SESSIONS_ACTIVE,

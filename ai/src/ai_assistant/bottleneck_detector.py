@@ -22,7 +22,7 @@ class BottleneckDetector:
             ))
             
         if metrics.get("onec_long_queries_total", 0) > 100:
-             results.append(AnalysisResult(
+            results.append(AnalysisResult(
                 is_bottleneck=True,
                 component="1C/DB",
                 confidence=0.8,
@@ -31,7 +31,7 @@ class BottleneckDetector:
 
         # Bitrix Checks
         if metrics.get("bitrix_http_5xx_total", 0) > 10:
-             results.append(AnalysisResult(
+            results.append(AnalysisResult(
                 is_bottleneck=True,
                 component="Bitrix",
                 confidence=0.95,
